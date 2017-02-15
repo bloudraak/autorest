@@ -29,7 +29,6 @@ Install 'chalk'
 Install 'yargs'
 Install 'through', 'through2'
 Install 'run', 'run-sequence'
-Install 'except', './except.iced'
 
 # bring some gulp-Plugins along
 Plugin 'filter',

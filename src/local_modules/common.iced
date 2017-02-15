@@ -1,11 +1,13 @@
 
 fs = require('fs')
 
+foreach= (delegate) -> 
+  through.obj ( each, enc, done ) -> 
+    delegate each, done
+
 module.exports =
   # lets us just handle each item in a stream easily.
-  foreach: (delegate) -> 
-    through.obj ( each, enc, done ) -> 
-      delegate each, done
+  foreach: foreach
 
   toArray: (result,passthru) => 
     foreach (each,done) => 
@@ -17,8 +19,13 @@ module.exports =
 
   showFiles: () ->
     foreach (each,done) ->
+      echo info each.path
       done null, each
 
+  onlyFiles: () -> 
+    foreach (each,done) ->
+      return done null, each if fs.statSync(each.path).isFile()
+      done null
 
   source: (globs, options ) -> 
     gulp.src( globs, options) 
@@ -112,6 +119,11 @@ module.exports =
     f = path.basename.match(/^(.*)_(.*)$/ )
     path.basename = "#{f[1].replace(/[_]/g, '/') }/#{f[2]}"
     path.dirname = ""
+
+  except: (match) -> 
+    foreach (each,done) ->
+      return done null if each.path.match( match ) 
+      done null, each
 
   guid: ->
     x = -> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring 1

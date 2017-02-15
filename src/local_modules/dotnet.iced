@@ -48,7 +48,7 @@ task 'policheck-assemblies','', ->
 
 ###############################################
 task 'sign-packages','' ,(done) ->
-  return done() # if configuration isnt "release"
+  return done() if configuration isnt "release"
 
 ###############################################  
 task 'publish-packages','Publishes the packages to the NuGet Repository', (done) ->
