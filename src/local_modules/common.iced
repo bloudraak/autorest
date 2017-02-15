@@ -129,6 +129,13 @@ module.exports =
     x = -> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring 1
     "#{x()}#{x()}-#{x()}-#{x()}-#{x()}-#{x()}#{x()}#{x()}"
 
+  Fail: (text) ->
+    echo ""
+    echo "#{ error 'Task Failed:' }  #{error_message text}"
+    echo ""
+    rm '-rf', "#{process.env.tmp}/gulp"
+    process.exit(1)
+
 # build task for global build
 module.exports.task 'build', 'builds project', -> 
   echo "Building project in #{basefolder}"
@@ -136,3 +143,8 @@ module.exports.task 'build', 'builds project', ->
 # task for vscode
 module.exports.task 'code', 'launches vscode', -> 
   exec "code #{basefolder}"
+
+module.exports.task 'release-only', '', (done)-> 
+  Fail( "This command requires --configuration release" ) if configuration isnt "release"
+  done()
+ 
