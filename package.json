@@ -57,7 +57,7 @@
   "dependencies": {
     "@types/request": "0.0.39",
     "@types/shelljs": "^0.6.0",
-    "http-proxy-agent": "^1.0.0",
+    "http-proxy-agent": "^4.0.1",
     "https-proxy-agent": "^1.0.0",
     "linq-es2015": "^2.4.13",
     "request": "^2.79.0",
